@@ -11,6 +11,21 @@ class User(db.Model):
     budget = db.Column(db.Integer(), nullable=False, default=1000)
     items = db.relationship("Item", backref='owned_user', lazy=True)
 
+    # @property
+    # def password(self):
+    #     '''password getter'''
+    #     return self.password
+
+    # @password.setter
+    # def password(self, password_):
+    #     '''password setter'''
+    #     print('>>>>>>>>>>>>>>>>>>>>>>>>>',password_)
+    #     self.password = (
+    #         bcrypt
+    #         .generate_password_hash(password=password_)
+    #         .decode('UTF-8')
+    #     )
+
     def __repr__(self) -> str:
         return f"USER [ {self.username} ]"
 

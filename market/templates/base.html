@@ -51,6 +51,32 @@
       </div>
     </nav>
 
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    <!-- body of WITH -->
+    {% if messages %}
+    <!-- If flashed messages exists loop through it one by one -->
+    {% for category, message in messages %}
+    <div class="alert alert-{{category}}">
+      <!-- message -->
+      {{message}}
+      <!-- close btn -->
+      <button
+        type="button"
+        class="m1-2 mb-1 close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+    <!-- end of for loop -->
+    {% endif %}
+    <!-- END OF WITH -->
+    {% endwith %}
+    <!-- FLASH MESSAGES  -->
+
     <!-- CONTENT -->
     {% block content %}{% endblock %}
 
