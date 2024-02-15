@@ -34,3 +34,17 @@ class Form(FlaskForm):
         validators=[EqualTo(fieldname='password'), DataRequired()]
     )
     submit = SubmitField(label='Submit')
+
+
+
+class LoginForm(FlaskForm):
+    '''Login form'''
+    email = StringField(
+        label='Email Address',
+        validators=[Email(), DataRequired()]
+    )
+    password = PasswordField(
+        label='Password',
+        validators=[DataRequired()]
+    )
+    submit = SubmitField(label='Login')

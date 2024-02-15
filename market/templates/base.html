@@ -40,14 +40,36 @@
             <a class="nav-link" href="/market">Market</a>
           </li>
         </ul>
+
+        <!-- if user is already logged in, then we don't want to show login/register link -->
+        <!-- https://flask-login.readthedocs.io/en/latest/ -->
+        {% if current_user.is_authenticated %}
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">Login</a>
+            <a class="nav-link" style="color: white; font-weight: bold"
+              >${{current_user.budget}}</a
+            >
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link">{{current_user.username}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+        <!-- if user is not logged in -->
+        {% else %}
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/register">Register</a>
           </li>
         </ul>
+        {% endif %}
+        <!-- end of  IF -->
       </div>
     </nav>
 

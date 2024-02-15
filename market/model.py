@@ -1,8 +1,16 @@
 '''SQLlite Model '''
-from market import db, app
+from flask_login import UserMixin
+
+from market import db, app, login_manager
 
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    '''reload the user object from the user ID stored in the session.'''
+    return User.query.get(int(user_id))
+
+
+class User(db.Model, UserMixin):
     """Database table for USERS""" 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), nullable=False)

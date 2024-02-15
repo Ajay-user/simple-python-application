@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+<!-- title -->
+{% block title %} Login Page {% endblock %}
+
+<!-- content -->
+{% block content %}
+
+<body class="text-center">
+  <div class="container">
+    <form
+      action="/login"
+      method="POST"
+      class="form-signin"
+      style="color: white"
+    >
+      {{ form.hidden_tag() }}
+
+      <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
+      <br />
+
+      {{ form.email.label() }} {{ form.email(class="form-control",
+      placeholder="Email") }}
+      <!--  -->
+      {{ form.password.label() }} {{ form.password(class="form-control",
+      placeholder="Password") }}
+
+      <br />
+
+      {{ form.submit(class="btn btn-lg btn-primary") }}
+
+      <br />
+      <br />
+
+      <div class="checkbox mb-3">
+        <h2 class="text-primary">Do not have an account?</h2>
+        <a class="btn btn-lg btn-secondary" href="/register">Register</a>
+      </div>
+    </form>
+  </div>
+</body>
+
+{% endblock %}

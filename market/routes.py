@@ -1,9 +1,10 @@
 '''App routes'''
 from flask import render_template, redirect, flash
+from flask_login import login_user, logout_user, login_required
 
 from market import app, db, bcrypt
 from market.model import Item, User
-from market.forms import Form
+from market.forms import Form, LoginForm
 
 
 
@@ -15,6 +16,7 @@ def hello():
 
 
 @app.route("/market")
+@login_required
 def market():
     "Market page"
     # items: list[dict] = [
@@ -41,10 +43,10 @@ def register_form():
 
         password_hash = (
             bcrypt
-            .generate_password_hash(form.password.data)
+            .generate_password_hash(form.password.data.encode('utf-8'))
             .decode('utf-8')
         )
-        
+
         user_to_create = User(
             username=form.username.data,
             email=form.email.data,
@@ -61,7 +63,7 @@ def register_form():
         for k, v in form.errors.items():
             flash(
                 message=f"""
-                FORM VALIDATION ERROR | please check the {k} | {v}
+                FORM VALIDATION ERROR 📢 please check the {k} 🔎 {v}
                 """,
                 category='danger'
             )
@@ -71,4 +73,44 @@ def register_form():
     return render_template('register.html', form=form)
 
 
+@app.route(rule='/login', methods=['GET', 'POST'])
+def login_page():
+    '''Login page'''
+    login_form = LoginForm()
 
+    if login_form.validate_on_submit():
+        # find the user
+        user_in = User.query.filter_by(email=login_form.email.data).first()
+        # check if there is a user or not, also check for password match
+        if user_in and (
+            bcrypt.check_password_hash(
+                pw_hash=user_in.password,
+                password=login_form.password.data.encode('utf-8')
+            )
+        ):
+            # Greet the user
+            flash(
+                message=f"Login success 🎉 Welcome {user_in.username}",
+                category='success'
+            )
+            login_user(user_in)
+            return redirect('/market')
+        else:
+            # Error msg
+            flash(
+                message="Login failed 🤨 Check your email and password",
+                category='danger'
+            )
+
+    return render_template('login.html', form=login_form)
+
+
+@app.route('/logout')
+def logout_fn():
+    '''
+    Logs a user out. (You do not need to pass the actual user.) 
+    This will also clean up the remember me cookie if it exists.
+    '''
+    logout_user()
+    flash(message="📢 You have been successfully logged out", category='info')
+    return redirect('/login')
