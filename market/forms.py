@@ -36,7 +36,6 @@ class Form(FlaskForm):
     submit = SubmitField(label='Submit')
 
 
-
 class LoginForm(FlaskForm):
     '''Login form'''
     email = StringField(
@@ -48,3 +47,38 @@ class LoginForm(FlaskForm):
         validators=[DataRequired()]
     )
     submit = SubmitField(label='Login')
+
+
+class PurchaseForm(FlaskForm):
+    '''Purchases the item from market'''
+    submit = SubmitField(label='Purchase now!')
+
+
+class SellingForm(FlaskForm):
+    '''Sell purchased item from the wallet'''
+    submit = SubmitField(label='Sell Item')
+
+
+class ProductDetailsForm(FlaskForm):
+    '''Create or Update a product'''
+    name = StringField(
+        label="Product Name",
+        validators=[DataRequired(message='Name of product')]
+    )
+    price = StringField(
+        label="Price",
+        validators=[DataRequired(message='Price of product')]
+    )
+    barcode = StringField(
+        label="Barcode",
+        validators=[DataRequired(message="Barcode is a 12-digit number")]
+    )
+    description = StringField(
+        label="Description",
+        validators=[DataRequired(message="Product Description")]
+    )
+    owner = StringField(
+        label="Product owner",
+        default=None
+    )
+    submit = SubmitField(label='Done')

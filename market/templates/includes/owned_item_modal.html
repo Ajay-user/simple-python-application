@@ -1,0 +1,162 @@
+<style>
+  .modal-content {
+    background-color: #212121;
+    color: white;
+    border: 2px solid white;
+  }
+
+  .close-btn {
+    color: red;
+  }
+
+  .form-input-and-label {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
+<!-- Selling Confirm -->
+<div
+  class="modal fade"
+  id="Modal-SellingConfirm-{{ owned_item.id }}"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">
+          <!-- -->
+          {{ owned_item.name }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span class="close-btn" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/market">
+          {{ selling_form.hidden_tag() }}
+          <h4 class="text-center">
+            Are you sure you want to sell {{ owned_item.name }} for {{
+            owned_item.price }}$ ?
+          </h4>
+          <br />
+          <h6 class="text-center">
+            By clicking Sell, you will put this item back on market
+          </h6>
+          <br />
+          <input
+            id="item_sold_id"
+            name="item_sold"
+            type="hidden"
+            value="{{owned_item.id}}"
+          />
+
+          {{ selling_form.submit(class="btn btn-outline-danger btn-block") }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UPDATE INFO -->
+<div
+  class="modal fade"
+  id="Modal-Update-{{ owned_item.id }}"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">
+          <!-- -->
+          {{ owned_item.name }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span class="close-btn" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/product_info_update" style="color: white">
+          {{ product_details_form.hidden_tag() }}
+          <h4 class="text-center">Product Details</h4>
+          <br />
+          <h6 class="text-center">
+            By clicking done, you are editing the product information
+          </h6>
+          <br />
+
+          <input
+            id="item_sold_id"
+            name="item_sold"
+            type="hidden"
+            value="{{owned_item.id}}"
+          />
+
+          <div class="form-input-and-label">
+            <label for="product_info_name">Product Name</label>
+            <input
+              id="product_info_name"
+              name="product_info_name"
+              type="text"
+              required
+              value="{{owned_item.name}}"
+            />
+            <label for="product_info_price">Price</label>
+            <input
+              id="product_info_price"
+              name="product_info_price"
+              type="text"
+              required
+              value="{{owned_item.price}}"
+            />
+            <label for="product_info_barcode">Barcode</label>
+            <input
+              id="product_info_barcode"
+              name="product_info_barcode"
+              type="text"
+              required
+              value="{{owned_item.barcode}}"
+            />
+            <label for="product_info_description">Description</label>
+            <input
+              id="product_info_description"
+              name="product_info_description"
+              type="text"
+              required
+              value="{{owned_item.description}}"
+            />
+          </div>
+
+          <!-- btn -->
+          <br />
+          {{ product_details_form.submit(class="btn btn-outline-info btn-block")
+          }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

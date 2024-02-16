@@ -60,8 +60,16 @@ with app.app_context():
     db.create_all()
 
     # # Add an item into the ITEM table
-    item = Item(name='Phone', barcode='893212299897', price=500, description='Coolest phone ever')
-    db.session.add(item)
+    # item= Item(name='Phone', barcode='893212299897', price=500, description='Coolest phone ever')
+    # db.session.add(item)
+    # db.session.commit()
+
+    # # Add some items into the ITEM table
+    item_1 = Item(name='Phone', barcode='893212299897', price=500, description='Coolest phone ever')
+    item_2 = Item(name='Laptop', barcode='993212299897', price=1500, description='Coolest Laptop ever')
+    item_3 = Item(name='Apple Laptop', barcode='993212299999', price=2500, description='Coolest Apple Laptop ever')
+    item_4 = Item(name='Gameboy', barcode='993212299897', price=150, description='Coolest Gameboy ever')
+    db.session.add_all([item_1, item_2, item_3, item_4])
     db.session.commit()
 
     # # Add an user into the USER table

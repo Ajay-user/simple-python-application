@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="row">
-  <div class="col-8">
+  <div class="col-8" style="margin: 10px">
     <!-- GRID LAYOUT  COL-8  -->
     <table class="table table-hover table-dark">
       <thead>
@@ -51,7 +51,62 @@
       </tbody>
     </table>
   </div>
+
   <!-- GRID LAYOUT  COL-2  -->
-  <div class="col-2">col-2</div>
+  <div class="col" style="margin: 10px">
+    <!-- CREATE NEW PRODUCT -->
+    {% include 'includes/create_new_product_modal.html' %}
+    <div class="create-product">
+      <button
+        class="btn btn-outline btn-info btn-block"
+        data-toggle="modal"
+        data-target="#Modal-New-Product"
+      >
+        Create new Product
+      </button>
+    </div>
+    <!-- end of new product -->
+    <br />
+    <h4 class="text-center">Products Owned</h4>
+    {% if owned_items %}
+    <!-- Your rows inside the table HERE: -->
+
+    {% for owned_item in owned_items %}
+    <!-- include modal -->
+    {% include 'includes/owned_item_modal.html' %}
+    <div class="col-l">
+      <div style="width: 100%" class="card text-center bg-dark p-1">
+        <div class="card-body" style="border: 2px solid green">
+          <h5 class="card-title" style="color: white">{{ owned_item.name }}</h5>
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            style="margin-bottom: 5px"
+            data-toggle="modal"
+            data-target="#Modal-SellingConfirm-{{ owned_item.id }}"
+          >
+            Sell this Item
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-info"
+            style="margin-bottom: 5px"
+            data-toggle="modal"
+            data-target="#Modal-Update-{{ owned_item.id }}"
+          >
+            Update this Item
+          </button>
+          <p class="card-text" style="color: white">
+            <strong> Cost price ${{ owned_item.price }} </strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- end of loop -->
+    {% endfor %}
+    <!-- end of if block -->
+    {% endif %}
+  </div>
 </div>
 {% endblock %}
